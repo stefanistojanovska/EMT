@@ -1,0 +1,31 @@
+<!DOCTYPE >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Info</title>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <main>
+        <div class="container">
+            <span  th:each="p : ${products}">
+                <span th:if="${p.getId().toString().equals(prid.toString()) }">
+                     <span th:text="${p.getName()}" style="text-decoration: underline"><u></u></span><br/>
+                     <img th:src="@{${p.getLink() }}" style="width: 110px; height: 100px" /><br/>
+                     <span th:text="${p.getDescription()}"></span><br/>
+                    <span th:text="${'Category: '+p.getCategory().getName()}"></span><br/>
+                    <span th:text="${'Manufacturer: '+p.getManufacturer().getName()}"></span><br/>
+
+
+                </span>
+            </span>
+        </div>
+    </main>
+</body>
+</html>

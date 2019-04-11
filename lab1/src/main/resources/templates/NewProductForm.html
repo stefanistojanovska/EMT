@@ -1,0 +1,52 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add a product</title>
+    <link rel="stylesheet" href="../../../../target/classes/static/assets/vendor/bootstrap/bootstrap.min.css"/>
+    <script src="../../../../target/classes/static/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../../../../target/classes/static/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="../../../../target/classes/static/assets/vendor/popper.min.js"></script>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <form class="form" method="post">
+
+
+
+           <div class="form-group">
+                 <label for="productName" style="width:250px">Name</label>
+                 <input id="productName"  class="form-control" th:field="*{product.name}" name="name" placeholder="Enter name" required/>
+             </div>
+           <div class="form-group">
+               <label for="productDescription" style="width:250px">Description</label>
+               <input id="productDescription" class="form-control"  th:field="*{product.description}" name="description" placeholder="Enter description" required/>
+           </div>
+           <div class="form-group">
+               <label for="manufacturerId" style="width:250px">Manufacturer:</label>
+               <select class="form-control" th:field="*{product.manufacturer.id}" required id="manufacturerId" name="manufacturerId" >
+                   <option th:each="m : ${manufacturers}" th:value="${m.id}" th:text="${m.name}">
+
+                   </option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="categoryId" style="width:250px">Category:</label>
+               <select  class="form-control" th:field="*{product.category.id}" required id="categoryId" name="categoryId">
+                   <option  th:each="m : ${categories}" th:value="${m.id}" th:text="${m.name}">
+
+                   </option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="productLink" style="width:250px">Link</label>
+               <input id="productLink" class="form-control"  th:field="*{product.link}" name="link" placeholder="Enter img link" required/>
+           </div>
+
+           <button type="submit" class="btn btn-primary">Submit</button>
+       </form>
+      </div>
+  </main>
+</body>
+</html>
