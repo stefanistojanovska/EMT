@@ -1,11 +1,36 @@
 package emt.labs.lab1.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name="product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
+    @JsonIgnore
     private String link;
+
+    @ManyToOne
+    @JoinColumn(name = "cat_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "man_id")
     private Manufacturer manufacturer;
+
+    private Double price;
+
+    @ManyToMany
+    @JoinTable(name = "product_accessory",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "accessory"))
+    private List<Accessory> accessories;
 
     public Long getId() {
         return id;
@@ -55,4 +80,23 @@ public class Product {
         this.manufacturer = manufacturer;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public List<Accessory> getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(List<Accessory> accessories) {
+        this.accessories = accessories;
+    }
+    public Long getCategoryId()
+    {
+        return category.getId();
+    }
 }
