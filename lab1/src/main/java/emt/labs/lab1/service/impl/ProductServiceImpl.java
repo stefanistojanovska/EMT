@@ -9,41 +9,47 @@ import emt.labs.lab1.repository.db.PersistentProductRepository;
 import emt.labs.lab1.service.ManufacturerService;
 import emt.labs.lab1.service.ProductService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class ProductServiceImpl implements ProductService {
     private PersistentProductRepository repo;
-    //private ManufacturerService manufacturerService;
+
 
     public ProductServiceImpl(PersistentProductRepository repo)
     {
         this.repo=repo;
-        //this.manufacturerService=manufacturerService;
-
     }
 
     @Override
     public List<Product> getAllProducts() {
         return repo.findAll();
     }
-    //CATEGORY DOVRSI
-   /* @Override
-    public List<Product> findAllByCategoryId(Long catId) {
-       //return getAllProducts().stream().filter(v->catId.equals((v.getCategory().getId()))).collect(Collectors.toList());
-       //List<Person> result = persons.stream().filter(byAge).collect(Collectors.<Person> toList());
-        return null;
 
-    }*/
+    @Override
+    public List<Product> findByCategoryId(Long catId) {
+        return repo.findByCategoryId(catId);
+    }
+
+    @Override
+    public List<Product> findByCategoryIdAndManufacturerId(Long categoryId,Long manufacturerId)
+    {
+        return repo.findByCategoryIdAndManufacturerId(categoryId,manufacturerId);
+    }
 
     @Override
     public Optional<Product> getOne(Long id) {
         return getAllProducts().stream().filter(v->id.equals(v.getId())).findAny();
     }
 
+    @Override
+    public Product addNewProduct(Product product) {
+        return repo.save(product);
+    }
 
 
 
@@ -59,10 +65,6 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    @Override
-    public Product addNewProduct(Product product) {
-        return null;
-    }
 
 
 

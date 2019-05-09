@@ -10,12 +10,13 @@ import java.util.Optional;
 public interface ProductService {
     List<Product> getAllProducts();
     Optional<Product> getOne(Long id);
-    //CATEGORY DOVRSI
-  //List<Product> findAllByCategoryId(Long categoryId);
+   List<Product> findByCategoryId(Long categoryId);
+   List<Product> findByCategoryIdAndManufacturerId(Long categoryId,Long manufacturerId);
+
    Product addNewProduct(Product product, Long manufacturerId);
    Product addNewDevice(String name, Double price, Long manufacturerId) throws ManufacturerNotFoundException;
 
-    Product addNewProduct(Product product);
+   Product addNewProduct(Product product);
 
     Product update(Product product) throws ProductNotFoundException;
     void delete(Long productId);

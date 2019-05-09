@@ -17,30 +17,40 @@ import java.util.List;
 @RequestMapping("/rest/")
 public class ProductsRestfulResource {
     private ProductService productService;
-    private CategoryService categoryService;
-    //private ManufacturerService manufacturerService;
-     public ProductsRestfulResource( ProductService productService,CategoryService categoryService)
-     {
-        this.categoryService=categoryService;
-         this.productService=productService;
-     }
-    @GetMapping("products")
-    public List<Product> getAllProducts(){return productService.getAllProducts();}
 
-/*    @GetMapping("mans")
-    public List<Manufacturer> getAllManufacturers(){
-        return manufacturerService.getAll();
-    }*/
+    public ProductsRestfulResource(ProductService productService) {
+
+        this.productService = productService;
+    }
+
+    @GetMapping("products")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+
     @GetMapping("products/{pr_id}")
-    public Product findProduct(@PathVariable("pr_id") Long id)
-    {
-        Product p=productService.getOne(id).orElseThrow(()->new ProductNotFoundException());
+    public Product findProduct(@PathVariable("pr_id") Long id) {
+        Product p = productService.getOne(id).orElseThrow(() -> new ProductNotFoundException());
         return p;
     }
-    @GetMapping("category/{cat_id}")
-    public List<Product> findProductsByCategory(@PathVariable("cat_id") Long id)
+   @GetMapping("product/category/{cat_id}")
+    public List<Product> findProductsByCategory(@PathVariable("cat_id") Long id) {        //return productService.findAllByCategoryId(id);
+        return productService.findByCategoryId(id);
+    }
+    @GetMapping("product/category/{catId}/manufacturer/{manId}")
+    public List<Product> findProductsByCategoryAndManufacturer(@PathVariable("catId")Long cId,@PathVariable("manId")Long mId)
     {
-         //return productService.findAllByCategoryId(id);
-        return null;
+        return productService.findByCategoryIdAndManufacturerId(cId, mId);
+    }
+    @GetMapping("product/category/{categoryId}/price")
+    public Double calculatePriceByCategory(@PathVariable("categoryId")Long id)
+    {
+        Double sum=0D;
+       List<Product>products= productService.findByCategoryId(id);
+        for (Product p:products) {
+            sum+=p.getPrice();
+        }
+        return sum;
     }
 }

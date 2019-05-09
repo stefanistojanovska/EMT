@@ -17,11 +17,9 @@ public class Product {
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "cat_id")
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "man_id")
     private Manufacturer manufacturer;
 
     private Double price;
@@ -95,8 +93,8 @@ public class Product {
     public void setAccessories(List<Accessory> accessories) {
         this.accessories = accessories;
     }
-    public Long getCategoryId()
+   /* public Long getCategoryId()
     {
         return category.getId();
-    }
+    }*/
 }

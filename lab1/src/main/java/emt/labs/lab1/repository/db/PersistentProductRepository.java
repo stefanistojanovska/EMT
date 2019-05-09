@@ -11,8 +11,12 @@ import java.util.Optional;
 
 public interface PersistentProductRepository extends JpaRepository<Product,Long> {
     List<Product> findAll();
-    @Query("select p from Product p where p.id=:id")
     Optional<Product> getById(@Param("id") Long id);
     //@Query("select p from Product p where p.categoryId=:categoryId")
-    //List<Product> findAllByCategoryId(Long categoryId);
+    List<Product> findByCategoryId(Long categoryId);
+    List<Product> findByCategoryIdAndManufacturerId(Long categoryId,Long manufacturerId);
+   /* @Query("select sum(price) from product p where p.categoryId=:categoryId ")
+    Long findByCategoryIdAndCalculatePrice(Long categoryId);*/
+   Product save(Product p);
+
 }
