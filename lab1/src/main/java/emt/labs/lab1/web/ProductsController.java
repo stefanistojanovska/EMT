@@ -1,12 +1,15 @@
 package emt.labs.lab1.web;
 
+import emt.labs.lab1.exceptions.AccessoryNotFoundException;
 import emt.labs.lab1.exceptions.CategoryNotFoundException;
 import emt.labs.lab1.exceptions.ManufacturerNotFoundException;
 import emt.labs.lab1.exceptions.ProductNotFoundException;
+import emt.labs.lab1.models.Accessory;
 import emt.labs.lab1.models.Manufacturer;
 import emt.labs.lab1.models.Product;
 import emt.labs.lab1.models.Category;
 
+import emt.labs.lab1.service.AccessoryService;
 import emt.labs.lab1.service.CategoryService;
 import emt.labs.lab1.service.ManufacturerService;
 import emt.labs.lab1.service.ProductService;
@@ -28,12 +31,14 @@ import java.util.Optional;
        private ProductService productService;
        private ManufacturerService manufacturerService;
        private CategoryService categoryService;
+       private AccessoryService accessoryService;
 
-        public ProductsController(ProductService productService, ManufacturerService manufacturerService, CategoryService categoryService)
+        public ProductsController(ProductService productService, ManufacturerService manufacturerService, CategoryService categoryService, AccessoryService accessoryService)
         {
             this.productService=productService;
             this.manufacturerService=manufacturerService;
             this.categoryService=categoryService;
+            this.accessoryService=accessoryService;
         }
 
 
@@ -61,7 +66,7 @@ import java.util.Optional;
             return "products";
         }
 
-    @ExceptionHandler({ManufacturerNotFoundException.class, CategoryNotFoundException.class})
+    @ExceptionHandler({ManufacturerNotFoundException.class, CategoryNotFoundException.class, AccessoryNotFoundException.class})
     @RequestMapping(value="products/add",method ={RequestMethod.POST})
     public String addProductWithModel(@ModelAttribute Product p,Model model) {
 
@@ -73,14 +78,14 @@ import java.util.Optional;
         if (!man.isPresent()) {
             throw new ManufacturerNotFoundException();
         }
-        //Long catId = Long.parseLong(req.getParameter("categoryId"));
+
         Long catId=p.getCategory().getId();
-       // Optional<Category> cat = categoryService.getOne(p.getCategory().getId());
         Optional<Category> cat = categoryService.getOne(p.getCategory().getId());
 
         if (!cat.isPresent()) {
             throw new CategoryNotFoundException();
         }
+
         Product newProduct=  new Product();
         newProduct.setId(p.getId());
         newProduct.setName(name);
@@ -89,11 +94,13 @@ import java.util.Optional;
         newProduct.setManufacturer(p.getManufacturer());
         newProduct.setCategory(p.getCategory());
         newProduct.setPrice(p.getPrice());
+        newProduct.setAccessories(p.getAccessories());
 
         productService.addNewProduct(newProduct);
         model.addAttribute("products",productService.getAllProducts());
         model.addAttribute("manufacturer",manufacturerService.getAll());
         model.addAttribute("categories",categoryService.getAll());
+
         return "redirect:/products";
     }
 

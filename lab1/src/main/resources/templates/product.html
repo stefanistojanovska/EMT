@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Info</title>
-    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
-    <script src="/assets/vendor/jquery/jquery.min.js"></script>
-    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-    <script src="/assets/vendor/popper.min.js"></script>
-    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../../../assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="../../../../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../../../../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="../../../../assets/vendor/popper.min.js"></script>
+    <script src="../../../../assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../../../../assets/vendor/popper.min.js"></script>
+
 
 </head>
 <body>
@@ -19,8 +21,11 @@
                      <span th:text="${p.getName()}" style="text-decoration: underline"><u></u></span><br/>
                      <img th:src="@{${p.getLink() }}" style="width: 110px; height: 100px" /><br/>
                      <span th:text="${p.getDescription()}"></span><br/>
+
                     <span th:text="${'Category: '+p.getCategory().getName()}"></span><br/>
                     <span th:text="${'Manufacturer: '+p.getManufacturer().getName()}"></span><br/>
+                         <span th:text="${'Price:'+p.getPrice().intValue()+'€'}"></span><br/><br/>
+                     <a th:href="'/checkout/'+${prid}" class="btn btn-primary">Buy</a>
 
 
                 </span>

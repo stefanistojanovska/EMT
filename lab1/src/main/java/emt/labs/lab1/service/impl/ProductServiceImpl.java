@@ -51,7 +51,16 @@ public class ProductServiceImpl implements ProductService {
         return repo.save(product);
     }
 
-
+    @Override
+    public Product getById(Long id)
+    {
+        //return getAllProducts().stream().filter(v->id.equals(v.getId())).findAny();
+        Optional<Product> product = repo.findById(id);
+        if (!product.isPresent()) {
+            throw new ProductNotFoundException();
+        }
+        return product.get();
+    }
 
 
 

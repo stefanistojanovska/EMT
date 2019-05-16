@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccessoryService {
-    List<Accessory> getAll();
-    Optional<Accessory> getOne(Long id);
+  /*  List<Accessory> getAll();
+    Optional<Accessory> getOne(Long id);*/
 
 }
